@@ -1,0 +1,43 @@
+import { useEffect, useState } from 'react';
+import { useParams, useNavigate } from 'react-router-dom';
+import { FaArrowLeft } from 'react-icons/fa';
+import BlogEditor from '../components/BlogEditor';
+import axios from 'axios';
+import styles from '../styles/EditorPage.module.css';
+
+const EditorPage = () => {
+  const { id } = useParams();
+  const navigate = useNavigate();
+  const [blogData, setBlogData] = useState(null);
+
+  useEffect(() => {
+    if (id) {
+      const token = localStorage.getItem('token');
+      axios.get(`http://localhost:6500/api/blogs/${id}`, {
+        headers: {
+          Authorization: `Bearer ${token}`
+        }
+      })
+      .then(res => setBlogData(res.data))
+      .catch(err => console.error('Failed to fetch blog', err));
+    }
+  }, [id]);
+
+  return (
+    <div className={styles.editorPageContainer}>
+      {/* <h1 className={styles.heading}>{id ? 'Edit Blog' : 'Create Blog'}</h1> */}
+      <button onClick={() => navigate(-1)} className={styles.backButton}>
+        <FaArrowLeft className={styles.backIcon} />
+      </button>
+      <BlogEditor blogId={id} existingData={blogData} isEditing={!!id} />
+      {blogData && (
+        <div className={styles.timestamp}>
+          <p><strong>Created:</strong> {new Date(blogData.createdAt).toLocaleString()}</p>
+          <p><strong>Last Updated:</strong> {new Date(blogData.updatedAt).toLocaleString()}</p>
+        </div>
+      )}
+    </div>
+  );
+};
+
+export default EditorPage;

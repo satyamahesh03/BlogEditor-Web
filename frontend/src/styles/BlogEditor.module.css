@@ -1,0 +1,65 @@
+.editorContainer {
+  display: flex;
+  flex-direction: column;
+  gap: 1.5rem;
+  padding: 2rem;
+  background-color: #fdfdfd;
+  border-radius: 12px;
+  box-shadow: 0 6px 16px rgba(0, 0, 0, 0.05);
+  max-width: 1300px;
+  margin: 2rem auto;
+  font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+}
+
+.editorContainer h2 {
+  font-size: 2rem;
+  font-weight: 600;
+  text-align: center;
+  color: #374151;
+}
+
+.editorContainer input,
+.editorContainer textarea {
+  width: 100%;
+  padding: 0.9rem;
+  border: 1px solid #d1d5db;
+  border-radius: 6px;
+  font-size: 1rem;
+  background-color: #f9fafb;
+  transition: border-color 0.2s ease, background-color 0.2s ease;
+}
+
+.editorContainer input:focus,
+.editorContainer textarea:focus {
+  border-color: #60a5fa;
+  background-color: #ffffff;
+  outline: none;
+}
+
+.editorContainer textarea {
+  resize: vertical;
+}
+
+.editorContainer button {
+  padding: 0.7rem 1.4rem;
+  background-color: #93c5fd;
+  color: #1f2937;
+  font-size: 1rem;
+  font-weight: 500;
+  border: none;
+  border-radius: 6px;
+  cursor: pointer;
+  transition: background-color 0.2s ease;
+  margin-right: 0.75rem;
+}
+
+.editorContainer button:hover {
+  background-color: #60a5fa;
+}
+
+.editorContainer p {
+  color: #10b981;
+  font-size: 0.95rem;
+  text-align: center;
+  margin-top: 0.5rem;
+}

@@ -13,7 +13,7 @@ const EditorPage = () => {
   useEffect(() => {
     if (id) {
       const token = localStorage.getItem('token');
-      axios.get(`http://localhost:6500/api/blogs/${id}`, {
+      axios.get(`https://blogeditor-backend-q4pb.onrender.com/api/blogs/${id}`, {
         headers: {
           Authorization: `Bearer ${token}`
         }

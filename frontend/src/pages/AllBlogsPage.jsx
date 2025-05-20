@@ -53,7 +53,7 @@ const AllBlogsPage = () => {
 
   const handleDelete = async (id) => {
     try {
-      await axios.delete(`http://localhost:6500/api/blogs/${id}`, {
+      await axios.delete(`https://blogeditor-backend-q4pb.onrender.com/api/blogs/${id}`, {
         headers: {
           Authorization: `Bearer ${localStorage.getItem('token')}`
         }
@@ -69,7 +69,7 @@ const AllBlogsPage = () => {
     try {
       const token = localStorage.getItem('token');
       await axios.post(
-        'http://localhost:6500/api/blogs/publish',
+        'https://blogeditor-backend-q4pb.onrender.com/api/blogs/publish',
         { id },
         { headers: { Authorization: `Bearer ${token}` } }
       );
@@ -102,7 +102,7 @@ const AllBlogsPage = () => {
       }
 
       try {
-        const res = await axios.get('http://localhost:6500/api/blogs', {
+        const res = await axios.get('https://blogeditor-backend-q4pb.onrender.com/api/blogs', {
           headers: {
             Authorization: `Bearer ${token}`
           }

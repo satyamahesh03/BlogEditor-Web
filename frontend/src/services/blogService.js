@@ -1,6 +1,6 @@
 import axios from 'axios';
 
-const BASE_URL = 'http://localhost:6500/api/blogs';
+const BASE_URL = 'https://blogeditor-backend-q4pb.onrender.com/api/blogs';
 
 export const saveDraft = (data) => axios.post(`${BASE_URL}/save-draft`, data);
 export const publishBlog = (data) => axios.post(`${BASE_URL}/publish`, data);

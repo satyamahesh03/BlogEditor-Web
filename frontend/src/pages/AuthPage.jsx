@@ -14,7 +14,7 @@ const AuthPage = () => {
     const endpoint = isLogin ? 'login' : 'register';
     console.log("Sending:", { username, password });
     try {
-      const res = await axios.post(`http://localhost:6500/api/auth/${endpoint}`, {
+      const res = await axios.post(`https://blogeditor-backend-q4pb.onrender.com/api/auth/${endpoint}`, {
         username, password
       });
 

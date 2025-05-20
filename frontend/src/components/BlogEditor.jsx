@@ -156,7 +156,7 @@ const BlogEditor = ({ blogId }) => {
 
   return (
     <div className={styles.editorContainer}>
-      <h2>Create Something Great</h2>
+      <h2>Your Ideas, Our Platform.</h2>
       <input
         type="text"
         placeholder="Enter title"

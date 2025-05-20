@@ -25,17 +25,19 @@ const EditorPage = () => {
 
   return (
     <div className={styles.editorPageContainer}>
-      {/* <h1 className={styles.heading}>{id ? 'Edit Blog' : 'Create Blog'}</h1> */}
       <button onClick={() => navigate(-1)} className={styles.backButton}>
         <FaArrowLeft className={styles.backIcon} />
       </button>
-      <BlogEditor blogId={id} existingData={blogData} isEditing={!!id} />
       {blogData && (
         <div className={styles.timestamp}>
           <p><strong>Created:</strong> {new Date(blogData.createdAt).toLocaleString()}</p>
           <p><strong>Last Updated:</strong> {new Date(blogData.updatedAt).toLocaleString()}</p>
         </div>
       )}
+      {/* <h1 className={styles.heading}>{id ? 'Edit Blog' : 'Create Blog'}</h1> */}
+      
+      <BlogEditor blogId={id} existingData={blogData} isEditing={!!id} />
+      
     </div>
   );
 };

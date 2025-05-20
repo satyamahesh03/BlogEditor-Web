@@ -7,7 +7,7 @@ import styles from '../styles/AuthPage.module.css';
 const AuthPage = () => {
   const [username, setUsername] = useState('');
   const [password, setPassword] = useState('');
-  const [isLogin, setIsLogin] = useState(true);
+  const [isLogin, setIsLogin] = useState(false);
 
   const handleSubmit = async (e) => {
     e.preventDefault();
@@ -40,7 +40,7 @@ const AuthPage = () => {
         <button type="submit">{isLogin ? 'Login' : 'Register'}</button>
       </form>
       <button onClick={() => setIsLogin(!isLogin)} className={styles.switchButton}>
-        Switch to {isLogin ? 'Register' : 'Login'}
+        {isLogin ? "Don't have an account? Switch to Register" : 'Already have an account? Switch to Login'}
       </button>
       <ToastContainer position="top-center" />
     </div>

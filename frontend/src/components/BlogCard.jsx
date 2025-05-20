@@ -1,9 +1,18 @@
+import styles from '../styles/BlogCard.module.css'; // Assuming you have a CSS module for styling
+
 const BlogCard = ({ blog }) => {
   return (
-    <div style={{ border: '1px solid gray', margin: '10px', padding: '10px' }}>
+    <div className={styles.blogCard}>
       <h3>{blog.title}</h3>
       <p>{blog.content}</p>
-      {/* <p>Status: {blog.status}</p> */}
+      <p>
+        {Array.isArray(blog.tags) &&
+          blog.tags.map((tag, index) => (
+            <span key={index} className={styles.tag}>
+              #{tag}
+            </span>
+          ))}
+      </p>
     </div>
   );
 };

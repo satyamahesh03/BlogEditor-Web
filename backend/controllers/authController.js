@@ -2,7 +2,7 @@ import User from '../models/User.js';
 import jwt from 'jsonwebtoken';
 
 const generateToken = (id) => {
-  return jwt.sign({ id }, process.env.JWT_SECRET, { expiresIn: '1h' });
+  return jwt.sign({ id }, process.env.JWT_SECRET, { expiresIn: '30d' });
 };
 
 export const registerUser = async (req, res) => {
@@ -26,7 +26,7 @@ export const loginUser = async (req, res) => {
   try {
     const user = await User.findOne({ username });
     if (!user || !(await user.matchPassword(password))) {
-      return res.status(401).json({ message: 'Invalid credentials' });
+      return res.status(401).json({ message: 'Invalid Username or Password' });
     }
     res.json({ token: generateToken(user._id), username: user.username, userId: user._id });
   } catch (err) {

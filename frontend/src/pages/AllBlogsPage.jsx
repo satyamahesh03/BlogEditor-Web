@@ -65,6 +65,25 @@ const AllBlogsPage = () => {
     }
   };
 
+  const handlePublish = async (id) => {
+    try {
+      const token = localStorage.getItem('token');
+      await axios.post(
+        'http://localhost:6500/api/blogs/publish',
+        { id },
+        { headers: { Authorization: `Bearer ${token}` } }
+      );
+      const updatedBlogs = blogs.map(blog =>
+        blog._id === id ? { ...blog, status: 'published' } : blog
+      );
+      setBlogs(updatedBlogs);
+      toast.success('Blog published!', { position: 'top-center', autoClose: 2000 });
+    } catch (error) {
+      console.error('Failed to publish blog', error);
+      toast.error('Failed to publish blog', { position: 'top-center', autoClose: 2000 });
+    }
+  };
+
   useEffect(() => {
     const token = localStorage.getItem('token');
     setTokenExists(!!token);
@@ -104,8 +123,13 @@ const AllBlogsPage = () => {
     fetchBlogs();
   }, [navigate]);
 
-  const drafts = blogs.filter(blog => blog.status === 'draft');
-  const published = blogs.filter(blog => blog.status === 'published');
+  const drafts = blogs
+    .filter(blog => blog.status === 'draft')
+    .sort((a, b) => new Date(b.updatedAt) - new Date(a.updatedAt));
+
+  const published = blogs
+    .filter(blog => blog.status === 'published')
+    .sort((a, b) => new Date(b.updatedAt) - new Date(a.updatedAt));
 
   return (
     <div className={styles.pageContainer}>
@@ -145,7 +169,10 @@ const AllBlogsPage = () => {
       </div>
 
       {loading ? (
-        <p>Loading blogs...</p>
+        <div className={styles.loadingContainer}>
+          <div className={styles.spinner}></div>
+          <p className={styles.loadingText}>Fetching blogs...</p>
+        </div>
       ) : (
         <>
           <div className={styles.blogSection}>
@@ -158,7 +185,7 @@ const AllBlogsPage = () => {
                     <p className={styles.timestamp}>
                       Last updated : {new Date(blog.updatedAt).toLocaleString()}
                     </p>
-                    {blog.user?._id === userId && (
+                    {String(blog.user?._id) === String(userId) && (
                       <div className={styles.buttonGroup}>
                         <button
                           onClick={() => handleEdit(blog._id)}
@@ -173,6 +200,14 @@ const AllBlogsPage = () => {
                           title="Delete"
                         >
                           <FiTrash2 size={18} />
+                        </button>
+                        <button
+                          onClick={() => handlePublish(blog._id)}
+                          className={styles.publishButton}
+                          title="Publish"
+                          disabled={blog.status === 'published'}
+                        >
+                          Publish
                         </button>
                       </div>
                     )}
@@ -197,7 +232,7 @@ const AllBlogsPage = () => {
                     <p className={styles.timestamp}>
                       Published on : {new Date(blog.updatedAt).toLocaleString()}
                     </p>
-                    {blog.user?._id === userId && (
+                    {String(blog.user?._id) === String(userId) && (
                       <div className={styles.buttonGroup}>
                         <button
                           onClick={() => handleDelete(blog._id)}

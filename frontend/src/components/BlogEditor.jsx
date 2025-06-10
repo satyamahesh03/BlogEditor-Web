@@ -177,7 +177,7 @@ const BlogEditor = ({ blogId }) => {
       />
       <input
         type="text"
-        placeholder="Tags (comma-separated)"
+        placeholder="eg: machineLearning, futurOfAI, AItools"
         value={tags}
         onChange={(e) => {
           setTags(e.target.value);

@@ -24,7 +24,7 @@ const BlogEditor = ({ blogId }) => {
     const fetchBlog = async () => {
       try {
         const token = localStorage.getItem('token');
-        const res = await axios.get(`https://blogeditor-backend-q4pb.onrender.com/api/blogs/${currentBlogId}`, {
+        const res = await axios.get(`${import.meta.env.VITE_API_URL}/blogs/${currentBlogId}`, {
           headers: {
             Authorization: `Bearer ${token}`,
           }
@@ -92,7 +92,7 @@ const BlogEditor = ({ blogId }) => {
     }
 
     try {
-      const response = await axios.post('https://blogeditor-backend-q4pb.onrender.com/api/blogs/save-draft', {
+      const response = await axios.post(`${import.meta.env.VITE_API_URL}/blogs/save-draft`, {
         id: currentBlogId,
         title,
         content,
@@ -134,7 +134,7 @@ const BlogEditor = ({ blogId }) => {
       return;
     }
     try {
-      await axios.post('https://blogeditor-backend-q4pb.onrender.com/api/blogs/publish', {
+      await axios.post(`${import.meta.env.VITE_API_URL}/blogs/publish`, {
         id: currentBlogId,
         title,
         content,

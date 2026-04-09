@@ -3,7 +3,7 @@
   padding: 0 auto;
   padding: 2rem;
   font-family: 'Segoe UI', sans-serif;
-  background-color:cornsilk;
+  background-color: cornsilk;
   min-height: 100vh;
 }
 
@@ -142,4 +142,75 @@
 .loadingText {
   font-size: 1.1rem;
   color: #555;
+}
+
+.tabsContainer {
+  display: flex;
+  gap: 2rem;
+  margin-bottom: 2rem;
+  border-bottom: 1px solid var(--border-light);
+}
+
+.tab {
+  background: transparent;
+  border: none;
+  font-size: 1.1rem;
+  font-weight: 600;
+  color: var(--text-secondary);
+  padding: 0 0 12px 0;
+  cursor: pointer;
+  position: relative;
+}
+
+.tab:hover {
+  color: var(--text-main);
+}
+
+.activeTab {
+  background: transparent;
+  border: none;
+  font-size: 1.1rem;
+  font-weight: 600;
+  color: var(--accent-color);
+  padding: 0 0 12px 0;
+  cursor: pointer;
+  position: relative;
+}
+
+.activeTab::after {
+  content: '';
+  position: absolute;
+  bottom: -1px;
+  left: 0;
+  right: 0;
+  height: 2px;
+  background-color: var(--accent-color);
+}
+
+.emptyMessage {
+  padding: 3rem 0;
+  text-align: center;
+  color: var(--text-secondary);
+  font-size: 1.1rem;
+  background-color: var(--bg-surface);
+  border: 1px dashed var(--border-light);
+  border-radius: 8px;
+}
+
+.expandedContent {
+  margin-top: 1rem;
+  padding-top: 1rem;
+  border-top: 1px solid var(--border-light);
+}
+
+.fullContent {
+  color: var(--text-main);
+  font-size: 1.05rem;
+  line-height: 1.6;
+  margin-bottom: 2rem;
+  white-space: pre-wrap;
+}
+
+.fullContent p {
+  margin-bottom: 1rem;
 }

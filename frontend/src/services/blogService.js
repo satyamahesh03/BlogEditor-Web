@@ -1,6 +1,6 @@
 import axios from 'axios';
 
-const BASE_URL = 'https://blogeditor-backend-q4pb.onrender.com/api/blogs';
+const BASE_URL = `${import.meta.env.VITE_API_URL}/blogs`;
 
 export const saveDraft = (data) => axios.post(`${BASE_URL}/save-draft`, data);
 export const publishBlog = (data) => axios.post(`${BASE_URL}/publish`, data);

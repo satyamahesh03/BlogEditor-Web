@@ -13,13 +13,13 @@ const EditorPage = () => {
   useEffect(() => {
     if (id) {
       const token = localStorage.getItem('token');
-      axios.get(`https://blogeditor-backend-q4pb.onrender.com/api/blogs/${id}`, {
+      axios.get(`${import.meta.env.VITE_API_URL}/blogs/${id}`, {
         headers: {
           Authorization: `Bearer ${token}`
         }
       })
-      .then(res => setBlogData(res.data))
-      .catch(err => console.error('Failed to fetch blog', err));
+        .then(res => setBlogData(res.data))
+        .catch(err => console.error('Failed to fetch blog', err));
     }
   }, [id]);
 
@@ -35,9 +35,9 @@ const EditorPage = () => {
         </div>
       )}
       {/* <h1 className={styles.heading}>{id ? 'Edit Blog' : 'Create Blog'}</h1> */}
-      
+
       <BlogEditor blogId={id} existingData={blogData} isEditing={!!id} />
-      
+
     </div>
   );
 };

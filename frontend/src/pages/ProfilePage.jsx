@@ -29,16 +29,16 @@ const ProfilePage = () => {
 
     return (
         <>
-        <button onClick={() => navigate(-1)} className={styles.backButton}>
+            <button onClick={() => navigate(-1)} className={styles.backButton}>
                 <FaArrowLeft className={styles.backIcon} /></button>
-        <div className={styles.profileContainer}>
-            <h2 className={styles.welcomeMessage}>Hi, <span className={styles.username}>{username}!</span></h2>
-            <button onClick={handleLogout} className={styles.logoutButton}>
-                <FiLogOut className={styles.logoutIcon} />
-            </button>
-        </div>
+            <div className={styles.profileContainer}>
+                <h2 className={styles.welcomeMessage}>Hi, <span className={styles.username}>{username}!</span></h2>
+                <button onClick={handleLogout} className={styles.logoutButton}>
+                    <FiLogOut className={styles.logoutIcon} />
+                </button>
+            </div>
         </>
-        
+
     );
 };
 

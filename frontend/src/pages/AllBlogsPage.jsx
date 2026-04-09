@@ -30,8 +30,13 @@ const AllBlogsPage = () => {
   const [loading, setLoading] = useState(true);
   const [tokenExists, setTokenExists] = useState(false);
   const [userId, setUserId] = useState(null);
+  const [expandedId, setExpandedId] = useState(null);
 
   const navigate = useNavigate();
+
+  const toggleExpand = (id) => {
+    setExpandedId(expandedId === id ? null : id);
+  };
 
   const checkAuth = () => {
     const token = localStorage.getItem('token');
@@ -53,7 +58,7 @@ const AllBlogsPage = () => {
 
   const handleDelete = async (id) => {
     try {
-      await axios.delete(`https://blogeditor-backend-q4pb.onrender.com/api/blogs/${id}`, {
+      await axios.delete(`${import.meta.env.VITE_API_URL}/blogs/${id}`, {
         headers: {
           Authorization: `Bearer ${localStorage.getItem('token')}`
         }
@@ -69,7 +74,7 @@ const AllBlogsPage = () => {
     try {
       const token = localStorage.getItem('token');
       await axios.post(
-        'https://blogeditor-backend-q4pb.onrender.com/api/blogs/publish',
+        `${import.meta.env.VITE_API_URL}/blogs/publish`,
         { id },
         { headers: { Authorization: `Bearer ${token}` } }
       );
@@ -102,7 +107,7 @@ const AllBlogsPage = () => {
       }
 
       try {
-        const res = await axios.get('https://blogeditor-backend-q4pb.onrender.com/api/blogs', {
+        const res = await axios.get(`${import.meta.env.VITE_API_URL}/blogs`, {
           headers: {
             Authorization: `Bearer ${token}`
           }
@@ -179,36 +184,46 @@ const AllBlogsPage = () => {
             <h2 className={styles.sectionTitle}>Drafts</h2>
             {drafts.length > 0 ? (
               drafts.map(blog => (
-                <div key={blog._id} className={styles.blogItem}>
+                <div key={blog._id} className={styles.blogItem} onClick={() => toggleExpand(blog._id)} style={{ cursor: 'pointer' }}>
                   <div className={styles.cardWrapper}>
-                    <BlogCard blog={blog} />
-                    <p className={styles.timestamp}>
-                      Last updated : {new Date(blog.updatedAt).toLocaleString()}
-                    </p>
-                    {String(blog.user?._id) === String(userId) && (
-                      <div className={styles.buttonGroup}>
-                        <button
-                          onClick={() => handleEdit(blog._id)}
-                          className={styles.editButton}
-                          title="Edit"
-                        >
-                          <FiEdit size={18} />
-                        </button>
-                        <button
-                          onClick={() => handleDelete(blog._id)}
-                          className={styles.deleteButton}
-                          title="Delete"
-                        >
-                          <FiTrash2 size={18} />
-                        </button>
-                        <button
-                          onClick={() => handlePublish(blog._id)}
-                          className={styles.publishButton}
-                          title="Publish"
-                          disabled={blog.status === 'published'}
-                        >
-                          Publish
-                        </button>
+                    <BlogCard blog={blog} isExpanded={expandedId === blog._id} />
+                    
+                    {expandedId === blog._id && (
+                      <div className={styles.expandedContent}>
+                        <div className={styles.fullContent}>
+                          {blog.content.split('\n').map((paragraph, idx) => (
+                            <p key={idx}>{paragraph}</p>
+                          ))}
+                        </div>
+                        <p className={styles.timestamp}>
+                          Last updated : {new Date(blog.updatedAt).toLocaleString()}
+                        </p>
+                        {String(blog.user?._id) === String(userId) && (
+                          <div className={styles.buttonGroup}>
+                            <button
+                              onClick={(e) => { e.stopPropagation(); handleEdit(blog._id); }}
+                              className={styles.editButton}
+                              title="Edit"
+                            >
+                              <FiEdit size={18} /> Edit
+                            </button>
+                            <button
+                              onClick={(e) => { e.stopPropagation(); handleDelete(blog._id); }}
+                              className={styles.deleteButton}
+                              title="Delete"
+                            >
+                              <FiTrash2 size={18} /> Delete
+                            </button>
+                            <button
+                              onClick={(e) => { e.stopPropagation(); handlePublish(blog._id); }}
+                              className={styles.publishButton}
+                              title="Publish"
+                              disabled={blog.status === 'published'}
+                            >
+                              Publish
+                            </button>
+                          </div>
+                        )}
                       </div>
                     )}
                   </div>
@@ -223,24 +238,34 @@ const AllBlogsPage = () => {
             <h2 className={styles.sectionTitle}>Published Blogs</h2>
             {published.length > 0 ? (
               published.map(blog => (
-                <div key={blog._id} className={styles.blogItem}>
+                <div key={blog._id} className={styles.blogItem} onClick={() => toggleExpand(blog._id)} style={{ cursor: 'pointer' }}>
                   <div className={styles.cardWrapper}>
-                    <BlogCard blog={blog} />
-                    <p className={styles.publisher}>
-                      <strong>Publisher :</strong> {blog.user?.username || 'Unknown'}
-                    </p>
-                    <p className={styles.timestamp}>
-                      Published on : {new Date(blog.updatedAt).toLocaleString()}
-                    </p>
-                    {String(blog.user?._id) === String(userId) && (
-                      <div className={styles.buttonGroup}>
-                        <button
-                          onClick={() => handleDelete(blog._id)}
-                          className={styles.deleteButton}
-                          title="Delete"
-                        >
-                          <FiTrash2 size={18} />
-                        </button>
+                    <BlogCard blog={blog} isExpanded={expandedId === blog._id} />
+                    
+                    {expandedId === blog._id && (
+                      <div className={styles.expandedContent}>
+                        <div className={styles.fullContent}>
+                          {blog.content.split('\n').map((paragraph, idx) => (
+                            <p key={idx}>{paragraph}</p>
+                          ))}
+                        </div>
+                        <p className={styles.publisher}>
+                          <strong>Publisher :</strong> {blog.user?.username || 'Unknown'}
+                        </p>
+                        <p className={styles.timestamp}>
+                          Published on : {new Date(blog.updatedAt).toLocaleString()}
+                        </p>
+                        {String(blog.user?._id) === String(userId) && (
+                          <div className={styles.buttonGroup}>
+                            <button
+                              onClick={(e) => { e.stopPropagation(); handleDelete(blog._id); }}
+                              className={styles.deleteButton}
+                              title="Delete"
+                            >
+                              <FiTrash2 size={18} /> Delete
+                            </button>
+                          </div>
+                        )}
                       </div>
                     )}
                   </div>
